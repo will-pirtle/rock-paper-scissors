@@ -7,7 +7,11 @@ function computerPlay() {
 }
 
 function getPlayerSelection() {
-  return prompt("Make selection: ").toLowerCase();
+  let userInput;
+  do {
+    userInput = prompt("Enter 'Rock', 'Paper', or 'Scissors': ").toLowerCase();
+  } while (!options.includes(userInput));
+  return userInput;
 }
 
 function playRound(playerSelection, computerSelection) {

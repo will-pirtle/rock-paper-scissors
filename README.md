@@ -4,7 +4,10 @@
 
 This project is the grade-school-classic game of "Rock, Paper, Scissors"! 
 
-To play, go to: <https://will-pirtle.github.io/rock-paper-scissors/> and follow the instructions.
+To play:
+ 1. Go to: <https://will-pirtle.github.io/rock-paper-scissors/>
+ 2. Open Console in Developer Tools
+ 3. Enter `startGame();` to begin first (or a new) game.
 
 ---
 
