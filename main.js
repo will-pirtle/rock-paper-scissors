@@ -1,3 +1,4 @@
+// Variables
 const options = ['rock', 'paper', 'scissors'];
 let playerScore = 0;
 let computerScore = 0;
@@ -5,14 +6,20 @@ let computerScore = 0;
 const results = document.querySelector('#results');
 const pScore = document.querySelector('#player-score');
 const compScore = document.querySelector('#computer-score');
-const buttons = document.querySelectorAll(".btn");
+const buttons = document.querySelectorAll('.btn');
+const playerHands = document.querySelector('#player-icons').querySelectorAll('span');
+const computerHands = document.querySelector('#computer-icons').querySelectorAll('span');
 
+
+// Event Listeners
 buttons.forEach((button) => {
   button.addEventListener('click', () => {
     playRound(button.id, computerPlay(button.id));
   });
 });
 
+
+// Functions
 function computerPlay(playerChoice) {
   // Don't allow computer to choose the same choice as the player
   let newOptions = options.filter(choice => choice != playerChoice);
@@ -20,6 +27,8 @@ function computerPlay(playerChoice) {
 }
 
 function playRound(playerSelection, computerSelection) {
+  clearChoices();
+  displayChoices(playerSelection, computerSelection);
   if (checkPlayerWin(playerSelection, computerSelection)) {
     playerScore++;
     results.textContent = `You won! ${playerSelection.toUpperCase()} beats ${computerSelection.toUpperCase()}.`;
@@ -35,6 +44,34 @@ function playRound(playerSelection, computerSelection) {
   } else {
     updateScores();
   }
+}
+
+function displayChoices(pChoice, compChoice) {
+  playerHands.forEach((icon) => {
+    if (icon.classList.contains(pChoice)) {
+      icon.classList.add('active');
+    }
+  });
+
+  computerHands.forEach((icon) => {
+    if (icon.classList.contains(compChoice)) {
+      icon.classList.add('active');
+    }
+  })
+}
+
+function clearChoices() {
+  playerHands.forEach((icon) => {
+    if (icon.classList.contains('active')) {
+      icon.classList.remove('active');
+    }
+  });
+
+  computerHands.forEach((icon) => {
+    if (icon.classList.contains('active')) {
+      icon.classList.remove('active');
+    }
+  });
 }
 
 function checkPlayerWin(pChoice, compChoice) {
@@ -78,6 +115,7 @@ function resetGame() {
   playerScore = 0;
   computerScore = 0;
   results.textContent = "";
+  clearChoices();
 }
 
 function updateScores() {

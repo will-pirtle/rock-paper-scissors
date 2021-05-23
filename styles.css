@@ -14,6 +14,9 @@ body {
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
+
+  background-color: #55423d;
+  color: #fff3ec;
 }
 
 .header-container {
@@ -21,6 +24,68 @@ body {
   flex-direction: column;
   align-items: center;
 }
+
+.title {
+  color: #fffffe;
+}
+
+.btn {
+  padding: 1rem;
+  margin: 0 1rem;
+  width: 150px;
+  font-weight: 500;
+
+  background-color: #55423d;
+  color: #fffffe;
+  border: 2px solid #ffc0ad;
+  border-radius: 10px;
+}
+.btn:hover {
+  cursor: pointer;
+  background-color: #ffc0ad;
+  color: #271c19;
+  font-weight: 500;
+}
+
+.icons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.icon-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  height: 300px;
+  width: 300px;
+}
+
+
+#player-icons > .rock,
+#player-icons > .paper {
+  transform: rotate(0.15turn);
+}
+#player-icons > .scissors {
+  transform: rotate(-0.1turn);
+}
+
+#computer-icons > .rock,
+#computer-icons > .paper {
+  transform: rotate(-0.15turn);
+}
+#computer-icons > .scissors {
+  transform: rotate(0.1turn);
+}
+
+.icon {
+  display: none;
+}
+
+.active {
+  display: inline-block;
+}
+
 
 .scores {
   display: flex;
