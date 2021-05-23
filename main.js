@@ -29,9 +29,9 @@ function playRound(playerSelection, computerSelection) {
   }
 
   if (isGameOver()) {
+    updateScores();
     endGame(getGameWinner());
     resetScores();
-    updateScores();
   } else {
     updateScores();
   }
