@@ -6,16 +6,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Rock, Paper, Scissors!</title>
   <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&display=swap" rel="stylesheet">
   <script src="https://kit.fontawesome.com/167dfe41be.js" crossorigin="anonymous"></script>
 </head>
 <body>
   <div class="main">
     <div class="header-container">
       <h1 class="title">Rock, Paper, Scissors!</h1>
-      <p class="subtitle">Choose your weapon and beat the computer in a game to 5 wins!</p>
     </div>
-    <div class="icons">
-      <div id="player-icons" class="icon-container">
+    <div class="game-container">
+      <div class="start-message">
+        <span>Choose your weapon below to start the game.<br>First player to 5 points, wins.<br>Good luck!</span>
+      </div>
+      <div id="player-icons" class="icon-container hidden">
         <span class="icon rock">
           <i class="far fa-hand-rock fa-10x"></i>
         </span>
@@ -26,7 +30,7 @@
           <i class="far fa-hand-scissors fa-10x fa-flip-horizontal"></i>
         </span>
       </div>
-      <div id="computer-icons" class="icon-container">
+      <div id="computer-icons" class="icon-container hidden">
         <span class="icon rock">
           <i class="far fa-hand-rock fa-10x fa-flip-horizontal"></i>
         </span>
@@ -38,6 +42,9 @@
         </span>
       </div>
     </div>
+    <div class="results-container">
+      <p id="results"></p>
+    </div>
     <div class="button-container">
       <button id="rock" class="btn">Rock</button>
       <button id="paper" class="btn">Paper</button>
@@ -46,16 +53,14 @@
     <div class="scores">
       <div class="score-container">
         <span class="score-label">Your Score:</span>
-        <span id="player-score">0</span>
+        <span id="player-score" class="score-text">0</span>
       </div>
       <div class="score-container">
         <span class="score-label">Computer Score:</span>
-        <span id="computer-score">0</span>
+        <span id="computer-score" class="score-text">0</span>
       </div>
     </div>
-    <div class="results-container">
-      <p id="results"></p>
-    </div>
+    
   </div>
   
   <script src="main.js"></script>

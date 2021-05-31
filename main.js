@@ -2,11 +2,14 @@
 const options = ['rock', 'paper', 'scissors'];
 let playerScore = 0;
 let computerScore = 0;
+let firstRound = true;
 
 const results = document.querySelector('#results');
 const pScore = document.querySelector('#player-score');
 const compScore = document.querySelector('#computer-score');
 const buttons = document.querySelectorAll('.btn');
+const startMessage = document.querySelector('.start-message');
+const iconContainers = document.querySelectorAll('.icon-container');
 const playerHands = document.querySelector('#player-icons').querySelectorAll('span');
 const computerHands = document.querySelector('#computer-icons').querySelectorAll('span');
 
@@ -27,8 +30,17 @@ function computerPlay(playerChoice) {
 }
 
 function playRound(playerSelection, computerSelection) {
+  if (firstRound) {
+    firstRound = false;
+    startMessage.classList.toggle('hidden');
+    iconContainers.forEach((container) => {
+      container.classList.toggle('hidden');
+    });
+  }
+
   clearChoices();
   displayChoices(playerSelection, computerSelection);
+
   if (checkPlayerWin(playerSelection, computerSelection)) {
     playerScore++;
     results.textContent = `You won! ${playerSelection.toUpperCase()} beats ${computerSelection.toUpperCase()}.`;
@@ -114,7 +126,15 @@ function endGame(winner) {
 function resetGame() {
   playerScore = 0;
   computerScore = 0;
+
+  firstRound = true;
+  startMessage.classList.toggle('hidden');
+  iconContainers.forEach((container) => {
+    container.classList.toggle('hidden');
+  });
+
   results.textContent = "";
+  
   clearChoices();
 }
 
