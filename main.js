@@ -1,71 +1,144 @@
+// Variables
 const options = ['rock', 'paper', 'scissors'];
 let playerScore = 0;
 let computerScore = 0;
+let firstRound = true;
+
+const results = document.querySelector('#results');
+const pScore = document.querySelector('#player-score');
+const compScore = document.querySelector('#computer-score');
+const buttons = document.querySelectorAll('.btn');
+const startMessage = document.querySelector('.start-message');
+const iconContainers = document.querySelectorAll('.icon-container');
+const playerHands = document.querySelector('#player-icons').querySelectorAll('span');
+const computerHands = document.querySelector('#computer-icons').querySelectorAll('span');
 
 
-function startGame() {
-  while (!gameOver()) {
-    let playerSelection = getPlayerSelection();
-    let computerSelection = computerPlay();
+// Event Listeners
+buttons.forEach((button) => {
+  button.addEventListener('click', () => {
+    playRound(button.id, computerPlay(button.id));
+  });
+});
 
-    playRound(playerSelection, computerSelection);
 
-    displayScores();
-  }
-
-  displayWinner();
-  resetScores();
-}
-
-function computerPlay() {
-  return options[Math.floor(Math.random() * options.length)];
-}
-
-function getPlayerSelection() {
-  let userInput;
-  do {
-    userInput = prompt("Enter 'Rock', 'Paper', or 'Scissors': ").toLowerCase();
-  } while (!options.includes(userInput));
-  return userInput;
+// Functions
+function computerPlay(playerChoice) {
+  // Don't allow computer to choose the same choice as the player
+  let newOptions = options.filter(choice => choice != playerChoice);
+  return newOptions[Math.floor(Math.random() * 2)];
 }
 
 function playRound(playerSelection, computerSelection) {
-  if (playerSelection === computerSelection) {
-    console.log(`Draw! Try again.`);
-  } else if (
-      playerSelection === 'rock' && computerSelection === 'scissors'
-      || playerSelection === 'paper' && computerSelection === 'rock'
-      || playerSelection === 'scissors' && computerSelection === 'paper'
-  ) {
+  if (firstRound) {
+    firstRound = false;
+    startMessage.classList.toggle('hidden');
+    iconContainers.forEach((container) => {
+      container.classList.toggle('hidden');
+    });
+  }
+
+  clearChoices();
+  displayChoices(playerSelection, computerSelection);
+
+  if (checkPlayerWin(playerSelection, computerSelection)) {
     playerScore++;
-    console.log(`You won! ${playerSelection.toUpperCase()} beats ${computerSelection.toUpperCase()}.`);
+    results.textContent = `You won! ${playerSelection.toUpperCase()} beats ${computerSelection.toUpperCase()}.`;
   } else {
     computerScore++;
-    console.log(`You lose! ${computerSelection.toUpperCase()} beats ${playerSelection.toUpperCase()}.`);
+    results.textContent = `You lose! ${computerSelection.toUpperCase()} beats ${playerSelection.toUpperCase()}.`;
   }
-}
 
-function displayScores() {
-  console.log(`Player: ${playerScore}\nComputer: ${computerScore}`);
-}
-
-function displayWinner() {
-  if (playerScore == 3) {
-    console.log("\nCONGRATS! You won the game!");
+  if (isGameOver()) {
+    updateScores();
+    endGame(getGameWinner());
+    resetScores();
   } else {
-    console.log("\nAggghh...The computer won :(");
+    updateScores();
   }
 }
 
-function gameOver() {
-  if (playerScore == 3 || computerScore == 3) {
+function displayChoices(pChoice, compChoice) {
+  playerHands.forEach((icon) => {
+    if (icon.classList.contains(pChoice)) {
+      icon.classList.add('active');
+    }
+  });
+
+  computerHands.forEach((icon) => {
+    if (icon.classList.contains(compChoice)) {
+      icon.classList.add('active');
+    }
+  })
+}
+
+function clearChoices() {
+  playerHands.forEach((icon) => {
+    if (icon.classList.contains('active')) {
+      icon.classList.remove('active');
+    }
+  });
+
+  computerHands.forEach((icon) => {
+    if (icon.classList.contains('active')) {
+      icon.classList.remove('active');
+    }
+  });
+}
+
+function checkPlayerWin(pChoice, compChoice) {
+  if (
+    pChoice === 'rock' && compChoice === 'scissors'
+    || pChoice === 'paper' && compChoice === 'rock'
+    || pChoice === 'scissors' && compChoice === 'paper'
+  ) {
     return true;
   }
   return false;
 }
 
-function resetScores() {
-  playerScore = 0;
-  computerScore = 0;
+function isGameOver() {
+  if (playerScore == 5 || computerScore == 5) {
+    return true;
+  }
+  return false;
 }
 
+function getGameWinner() {
+  if (playerScore == 5) {
+    return "player";
+  } else {
+    return "computer";
+  }
+}
+
+function endGame(winner) {
+  if (winner == "player") {
+    alert("CONGRATS! You defeated the computer!")
+  } else {
+    alert("Oh no! The computer won...Let's try again.")
+  }
+
+  resetGame();
+  updateScores();
+}
+
+function resetGame() {
+  playerScore = 0;
+  computerScore = 0;
+
+  firstRound = true;
+  startMessage.classList.toggle('hidden');
+  iconContainers.forEach((container) => {
+    container.classList.toggle('hidden');
+  });
+
+  results.textContent = "";
+  
+  clearChoices();
+}
+
+function updateScores() {
+  pScore.textContent = `${playerScore}`;
+  compScore.textContent = `${computerScore}`;
+}
